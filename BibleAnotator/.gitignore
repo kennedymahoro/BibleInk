@@ -1,0 +1,22 @@
+# Xcode and macOS
+.DS_Store
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+
+# Sensitive Information (DO NOT COMMIT)
+.env
+*.xcconfig
+Secrets.swift
+Secrets.xcconfig
+
+# Swift Package Manager
+.swiftpm/xcode/package.xcworkspace
+.swiftpm/xcode/xcuserdata
+.build/
+
+# Backup and Temporary
+*.swp
+*.lock
+*.tmp
