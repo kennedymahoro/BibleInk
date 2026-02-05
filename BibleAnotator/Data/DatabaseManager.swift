@@ -39,4 +39,21 @@ class DatabaseManager {
             print("❌ File Manager error: \(error)")
         }
     }
+    func fetchVerse(verseID: String) -> String? {
+    let query = "SELECT content FROM verses WHERE verse_id = ?;"
+    var statement: OpaquePointer?
+    
+    if sqlite3_prepare_v2(db, query, -1, &statement, nil) == SQLITE_OK {
+        // Bind the verse_id to the '?' in the query
+        sqlite3_bind_text(statement, 1, (verseID as NSString).utf8String, -1, nil)
+        
+        if sqlite3_step(statement) == SQLITE_ROW {
+            let content = String(cString: sqlite3_column_text(statement, 0))
+            sqlite3_finalize(statement)
+            return content
+        }
+    }
+    sqlite3_finalize(statement)
+    return nil
+}
 }
