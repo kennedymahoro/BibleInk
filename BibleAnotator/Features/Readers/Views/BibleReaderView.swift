@@ -1,12 +1,28 @@
+import SwiftData
 import SwiftUI
 
-// bible reader view
 struct BibleReaderView: View {
-    var body: some View {
-        Text("It is working")
-    }
-}
+    // 1. Fetching logic
+    @State private var verses: [Verse] = []
 
-#Preview {
-    BibleReaderView()
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(verses) { verse in
+                        // 2. The custom row that handles drawing
+                        VerseRowView(verse: verse)
+
+                        Divider()
+                            .padding(.leading)
+                    }
+                }
+            }
+            .navigationTitle("John 1")
+            .onAppear {
+                // 3. Load the data from your SQLite DatabaseManager
+                self.verses = DatabaseManager.shared.fetchChapter(book: "John", chapter: 1)
+            }
+        }
+    }
 }
